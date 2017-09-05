@@ -25,6 +25,28 @@ const (
 	EntityTypeUnknown                      EntityType = "Unknown"
 )
 
+// GetEndpoint returns the single entity endpoint name
+func (e EntityType) GetEndpoint() string {
+	switch e {
+	case EntityTypeThing:
+		return "Thing"
+	case EntityTypeLocation:
+		return "Location"
+	case EntityTypeHistoricalLocation:
+		return "HistoricalLocation"
+	case EntityTypeDatastream:
+		return "Datastream"
+	case EntityTypeSensor:
+		return "Sensor"
+	case EntityTypeObservedProperty:
+		return "ObservedProperty"
+	case EntityTypeFeatureOfInterest:
+		return "FeatureOfInterest"
+	}
+
+	return ""
+}
+
 // EntityTypeList is a list for all known entity types
 var EntityTypeList = []EntityType{EntityTypeThing,
 	EntityTypeLocation, EntityTypeHistoricalLocation,
@@ -43,6 +65,28 @@ var StringEntityMap = map[string]EntityType{
 	"observedproperty": EntityTypeObservedProperty, "observedproperties": EntityTypeObservedProperty,
 	"observation": EntityTypeObservation, "observations": EntityTypeObservation,
 	"featureofinterest": EntityTypeFeatureOfInterest, "featuresofinterest": EntityTypeFeatureOfInterest,
+}
+
+// GetArrayEndpoint returns the (array) endpoint name for the current EntityType
+func (e EntityType) GetArrayEndpoint() string {
+	switch e {
+	case EntityTypeThing:
+		return "Things"
+	case EntityTypeLocation:
+		return "Locations"
+	case EntityTypeHistoricalLocation:
+		return "HistoricalLocations"
+	case EntityTypeDatastream:
+		return "Datastreams"
+	case EntityTypeSensor:
+		return "Sensors"
+	case EntityTypeObservedProperty:
+		return "ObservedProperties"
+	case EntityTypeFeatureOfInterest:
+		return "FeaturesOfInterest"
+	}
+
+	return ""
 }
 
 // ToString return the string representation of the EntityType.
@@ -162,6 +206,10 @@ func (b *BaseEntity) SetID(newID interface{}) {
 	b.ID = newID
 }
 
+func (b BaseEntity) ClearNav() {
+	b.NavSelf = ""
+}
+
 // ToString return the string representation of the EntityLink.
 func (e EntityLink) ToString() string {
 	return fmt.Sprintf("%s", e)
@@ -169,6 +217,7 @@ func (e EntityLink) ToString() string {
 
 // Entity is the base interface for all SensorThings entities.
 type Entity interface {
+	ClearNav()
 	ParseEntity(data []byte) error
 	ContainsMandatoryParams() (bool, []error)
 	GetID() interface{}

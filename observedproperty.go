@@ -16,6 +16,11 @@ type ObservedProperty struct {
 	Datastreams    []*Datastream `json:"Datastreams,omitempty"`
 }
 
+func (o *ObservedProperty) ClearNav() {
+	o.NavSelf = ""
+	o.NavDatastreams = ""
+}
+
 // GetEntityType returns the EntityType for ObservedProperty
 func (o ObservedProperty) GetEntityType() EntityType {
 	return EntityTypeObservedProperty

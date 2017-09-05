@@ -17,6 +17,12 @@ type HistoricalLocation struct {
 	Locations    []*Location `json:"Locations,omitempty"`
 }
 
+func (h *HistoricalLocation) ClearNav() {
+	h.NavSelf = ""
+	h.NavThing = ""
+	h.NavLocations = ""
+}
+
 // GetEntityType returns the EntityType for HistoricalLocation
 func (h HistoricalLocation) GetEntityType() EntityType {
 	return EntityTypeHistoricalLocation

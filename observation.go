@@ -30,6 +30,12 @@ type Observation struct {
 	FeatureOfInterest    *FeatureOfInterest     `json:"FeatureOfInterest,omitempty"`
 }
 
+func (o *Observation) ClearNav() {
+	o.NavSelf = ""
+	o.NavDatastream = ""
+	o.NavFeatureOfInterest = ""
+}
+
 // GetEntityType returns the EntityType for Observation
 func (o Observation) GetEntityType() EntityType {
 	return EntityTypeObservation

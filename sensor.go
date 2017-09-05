@@ -17,6 +17,11 @@ type Sensor struct {
 	Datastreams    []*Datastream `json:"Datastreams,omitempty"`
 }
 
+func (s *Sensor) ClearNav() {
+	s.NavSelf = ""
+	s.NavDatastreams = ""
+}
+
 // GetEntityType returns the EntityType for Sensor
 func (s Sensor) GetEntityType() EntityType {
 	return EntityTypeSensor

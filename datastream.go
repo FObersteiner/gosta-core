@@ -27,6 +27,14 @@ type Datastream struct {
 	ResultTime          string                 `json:"resultTime,omitempty"`
 }
 
+func (d *Datastream) ClearNav() {
+	d.NavSelf = ""
+	d.NavThing = ""
+	d.NavSensor = ""
+	d.NavObservations = ""
+	d.NavObservedProperty = ""
+}
+
 // GetEntityType returns the EntityType for Datastream
 func (d Datastream) GetEntityType() EntityType {
 	return EntityTypeDatastream

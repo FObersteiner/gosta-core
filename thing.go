@@ -22,6 +22,13 @@ type Thing struct {
 	HistoricalLocations    []*HistoricalLocation  `json:"HistoricalLocations,omitempty"`
 }
 
+func (t *Thing) ClearNav() {
+	t.NavSelf = ""
+	t.NavLocations = ""
+	t.NavDatastreams = ""
+	t.NavHistoricalLocations = ""
+}
+
 // GetEntityType returns the EntityType for Thing
 func (t Thing) GetEntityType() EntityType {
 	return EntityTypeThing

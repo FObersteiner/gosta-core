@@ -18,6 +18,11 @@ type FeatureOfInterest struct {
 	OriginalLocationID interface{}            `json:"-"`
 }
 
+func (f *FeatureOfInterest) ClearNav() {
+	f.NavSelf = ""
+	f.NavObservations = ""
+}
+
 // GetEntityType returns the EntityType for FeatureOfInterest
 func (f FeatureOfInterest) GetEntityType() EntityType {
 	return EntityTypeFeatureOfInterest
