@@ -76,7 +76,7 @@ func TestEntityLinkStrings(t *testing.T) {
 	assert.Equal(t, "Sensors", EntityLinkSensors.ToString())
 	assert.Equal(t, "ObservedProperties", EntityLinkObservedProperties.ToString())
 	assert.Equal(t, "Observations", EntityLinkObservations.ToString())
-	assert.Equal(t, "FeatureOfInterest", EntityLinkFeatureOfInterests.ToString())
+	assert.Equal(t, "FeaturesOfInterest", EntityLinkFeatureOfInterests.ToString())
 }
 
 func TestCreateEntitySelfLink(t *testing.T) {

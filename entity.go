@@ -152,7 +152,7 @@ const (
 	EntityLinkSensors             EntityLink = "Sensors"
 	EntityLinkObservedProperties  EntityLink = "ObservedProperties"
 	EntityLinkObservations        EntityLink = "Observations"
-	EntityLinkFeatureOfInterests  EntityLink = "FeatureOfInterest"
+	EntityLinkFeatureOfInterests  EntityLink = "FeaturesOfInterest"
 )
 
 // BaseEntity is the entry point for an entity
