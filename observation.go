@@ -19,7 +19,7 @@ const (
 type Observation struct {
 	BaseEntity
 	PhenomenonTime       string                 `json:"phenomenonTime,omitempty"`
-	Result               interface{}            `json:"result,omitempty"`
+	Result               json.RawMessage        `json:"result,omitempty"`
 	ResultTime           *string                `json:"resultTime,omitempty"`
 	ResultQuality        string                 `json:"resultQuality,omitempty"`
 	ValidTime            string                 `json:"validTime,omitempty"`
@@ -154,7 +154,7 @@ func (o Observation) MarshalPostgresJSON() ([]byte, error) {
 
 	return json.Marshal(&struct {
 		PhenomenonTime string                 `json:"phenomenonTime,omitempty"`
-		Result         interface{}            `json:"result,omitempty"`
+		Result         json.RawMessage        `json:"result,omitempty"`
 		ResultTime     string                 `json:"resultTime,omitempty"`
 		ResultQuality  string                 `json:"resultQuality,omitempty"`
 		ValidTime      string                 `json:"validTime,omitempty"`
