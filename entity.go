@@ -22,6 +22,7 @@ const (
 	EntityTypeFeatureOfInterest            EntityType = "FeatureOfInterest"
 	EntityTypeThingToLocation              EntityType = "ThingToLocation"
 	EntityTypeLocationToHistoricalLocation EntityType = "LocationToHistoricalLocation"
+	EntityTypeCreateObservations           EntityType = "CreateObservations"
 	EntityTypeUnknown                      EntityType = "Unknown"
 )
 
@@ -42,6 +43,8 @@ func (e EntityType) GetEndpoint() string {
 		return "ObservedProperty"
 	case EntityTypeFeatureOfInterest:
 		return "FeatureOfInterest"
+	case EntityTypeCreateObservations:
+		return "CreateObservations"
 	}
 
 	return ""
@@ -53,6 +56,7 @@ var EntityTypeList = []EntityType{EntityTypeThing,
 	EntityTypeDatastream, EntityTypeSensor,
 	EntityTypeObservedProperty, EntityTypeObservation,
 	EntityTypeFeatureOfInterest, EntityTypeUnknown,
+	EntityTypeCreateObservations,
 }
 
 // StringEntityMap is a map of strings that map a string to an EntityType
@@ -114,6 +118,8 @@ func EntityFromType(e EntityType) Entity {
 		return &Observation{}
 	case EntityTypeFeatureOfInterest:
 		return &FeatureOfInterest{}
+	case EntityTypeCreateObservations:
+		return &CreateObservations{}
 	}
 
 	return nil
@@ -153,6 +159,7 @@ const (
 	EntityLinkObservedProperties  EntityLink = "ObservedProperties"
 	EntityLinkObservations        EntityLink = "Observations"
 	EntityLinkFeatureOfInterests  EntityLink = "FeaturesOfInterest"
+	EntityLinkCreateObservations  EntityLink = "CreateObservations"
 )
 
 // BaseEntity is the entry point for an entity
