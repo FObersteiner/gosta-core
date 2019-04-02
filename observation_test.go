@@ -2,9 +2,10 @@ package core
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var jsonObservation = ` {
@@ -202,7 +203,7 @@ func TestMarshalPostgresJSONWithResultTime(t *testing.T) {
 func TestMandatoryParametersExistObservation(t *testing.T) {
 	//arrange
 	observation := &Observation{
-		Result:     20,
+		Result:     []byte("20"),
 		Datastream: &Datastream{},
 	}
 	observation.Datastream.ID = "1"
