@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"strings"
 )
 
 const (
@@ -62,15 +63,10 @@ func (o *Observation) ContainsMandatoryParams() (bool, []error) {
 	// When a SensorThings service receives a POST Observations without phenomenonTime, the service SHALL
 	// assign the current server time to the value of the phenomenonTime.
 	var errors []error
-
-	if len(o.PhenomenonTime) == 0 {
-		o.PhenomenonTime = time.Now().UTC().Format(ISO8601)
-	} else {
-		if t, err := time.Parse(ISO8601, o.PhenomenonTime); err != nil {
-			errors = append(errors, fmt.Errorf("Invalid phenomenonTime: %v", err.Error()))
-		} else {
-			o.PhenomenonTime = t.UTC().Format("2006-01-02T15:04:05.000Z")
-		}
+	
+	err := o.setPhenomenonTime()
+	if err != nil {
+		errors = append(errors, err)
 	}
 
 	// When a SensorThings service receives a POST Observations without resultTime, the service SHALL assign a
@@ -94,6 +90,40 @@ func (o *Observation) ContainsMandatoryParams() (bool, []error) {
 	}
 
 	return true, nil
+}
+
+func (o *Observation) setPhenomenonTime() error {
+	if len(o.PhenomenonTime) == 0 {
+		o.PhenomenonTime = time.Now().UTC().Format(ISO8601)
+	} else {
+		splitTime := strings.Split(o.PhenomenonTime, "/")
+		timeString, err := parseTime("", splitTime[0])
+		if err != nil {
+			return err
+		}
+
+		if(len(splitTime) > 1){
+			timeString, err = parseTime(fmt.Sprintf("%s/", timeString), splitTime[1])
+			if err != nil {
+				return err
+			}
+		}
+
+		o.PhenomenonTime = timeString		
+	}
+
+	return nil
+}
+
+func parseTime(prefix, timeString string) (string, error) {
+	parsedString := ""
+	if t, err := time.Parse(ISO8601, timeString); err != nil {
+		return parsedString, fmt.Errorf("Invalid phenomenonTime: %v", err.Error())
+	} else {
+		parsedString = fmt.Sprintf("%s%s", prefix, t.UTC().Format("2006-01-02T15:04:05.000Z")) 
+	}	
+	
+	return parsedString, nil
 }
 
 // MarshalJSON marshalls the observation into a JSON byte array
