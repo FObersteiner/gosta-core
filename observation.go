@@ -2,11 +2,10 @@ package core
 
 import (
 	"encoding/json"
-
 	"errors"
 	"fmt"
-	"time"
 	"strings"
+	"time"
 )
 
 const (
@@ -63,7 +62,7 @@ func (o *Observation) ContainsMandatoryParams() (bool, []error) {
 	// When a SensorThings service receives a POST Observations without phenomenonTime, the service SHALL
 	// assign the current server time to the value of the phenomenonTime.
 	var errors []error
-	
+
 	err := o.setPhenomenonTime()
 	if err != nil {
 		errors = append(errors, err)
@@ -102,14 +101,14 @@ func (o *Observation) setPhenomenonTime() error {
 			return err
 		}
 
-		if(len(splitTime) > 1){
+		if len(splitTime) > 1 {
 			timeString, err = parseTime(fmt.Sprintf("%s/", timeString), splitTime[1])
 			if err != nil {
 				return err
 			}
 		}
 
-		o.PhenomenonTime = timeString		
+		o.PhenomenonTime = timeString
 	}
 
 	return nil
@@ -120,9 +119,9 @@ func parseTime(prefix, timeString string) (string, error) {
 	if t, err := time.Parse(ISO8601, timeString); err != nil {
 		return parsedString, fmt.Errorf("Invalid phenomenonTime: %v", err.Error())
 	} else {
-		parsedString = fmt.Sprintf("%s%s", prefix, t.UTC().Format("2006-01-02T15:04:05.000Z")) 
-	}	
-	
+		parsedString = fmt.Sprintf("%s%s", prefix, t.UTC().Format("2006-01-02T15:04:05.000Z"))
+	}
+
 	return parsedString, nil
 }
 

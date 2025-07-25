@@ -3,8 +3,9 @@ package core
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSetLinks(t *testing.T) {
@@ -51,13 +52,13 @@ func TestParseEntityFoiFails(t *testing.T) {
 }
 
 func TestMissingMandatoryParametersFeatureOfInterest(t *testing.T) {
-	//arrange
+	// arrange
 	featureofinterest := &FeatureOfInterest{}
 
-	//act
+	// act
 	_, err := featureofinterest.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.NotNil(t, err, "FeatureOfInterest mandatory param description not filled in should have returned error")
 	if len(err) > 0 {
 		assert.Contains(t, fmt.Sprintf("%v", err[0]), "name")
@@ -65,16 +66,16 @@ func TestMissingMandatoryParametersFeatureOfInterest(t *testing.T) {
 }
 
 func TestMissingMandatoryParametersFeatureOfInterestSucceeds(t *testing.T) {
-	//arrange
+	// arrange
 	featureofinterest := &FeatureOfInterest{}
 	featureofinterest.Name = "name"
 	featureofinterest.Description = "desc"
 	featureofinterest.EncodingType = "type"
 	featureofinterest.Feature = map[string]interface{}{"name": "location name 1"}
 
-	//act
+	// act
 	_, err := featureofinterest.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.Nil(t, err, "FeatureOfInterest mandatory param description filled in should not have returned error")
 }

@@ -12,13 +12,13 @@ const (
 )
 
 func TestParseCreateObservations(t *testing.T) {
-	//arrange
+	// arrange
 	co := &CreateObservations{}
 
-	//act
+	// act
 	err := co.ParseEntity([]byte(jsonString))
 
-	//assert
+	// assert
 	assert.Nil(t, err, "Parsing JSON should not give an error")
 
 	// 2 datastreams

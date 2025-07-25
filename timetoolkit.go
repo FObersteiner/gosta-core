@@ -1,11 +1,11 @@
-package now
+package core
 
 import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"time"
 	"strings"
+	"time"
 )
 
 // Period struct (Start, End)
@@ -38,19 +38,19 @@ func GetPeriodFromPostgresString(period string) Period {
 
 // ParsePostgresTime parses postgres time to object
 func ParsePostgresTime(t string) time.Time {
-	var result, _ = time.Parse("2006-01-02 15:04:05-07", t)
+	result, _ := time.Parse("2006-01-02 15:04:05-07", t)
 	return result
 }
 
 // TimeToIso8601 converts time object to ISO8601 object
 func TimeToIso8601(t time.Time) string {
-	var result = t.Format("2006-01-02T15:04:05.000Z")
+	result := t.Format("2006-01-02T15:04:05.000Z")
 	return result
 }
 
 // TimeToPosgresFormat formats time object as postgres
 func TimeToPosgresFormat(t time.Time) string {
-	var result = t.Format("2006-01-02 15:04:05-07")
+	result := t.Format("2006-01-02 15:04:05-07")
 	return result
 }
 
@@ -70,9 +70,9 @@ func Iso8601ToPostgresPeriod(input string) string {
 
 // PostgresToIso8601Period converts Postgres period format to Iso8601 format
 func PostgresToIso8601Period(period string) string {
-	var p = GetPeriodFromPostgresString(period)
-	var startTime = ParsePostgresTime(p.Start)
-	var endTime = ParsePostgresTime(p.End)
-	var iso8601Period = TimeToIso8601(startTime) + "/" + TimeToIso8601(endTime)
+	p := GetPeriodFromPostgresString(period)
+	startTime := ParsePostgresTime(p.Start)
+	endTime := ParsePostgresTime(p.End)
+	iso8601Period := TimeToIso8601(startTime) + "/" + TimeToIso8601(endTime)
 	return iso8601Period
 }

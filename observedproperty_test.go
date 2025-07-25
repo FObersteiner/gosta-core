@@ -2,8 +2,9 @@ package core
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var jsonObservedProperty = `{
@@ -17,13 +18,13 @@ var jsonObservedPropertyError = `{
 }`
 
 func TestMissingMandatoryParametersObservedProperty(t *testing.T) {
-	//arrange
+	// arrange
 	op := &ObservedProperty{}
 
-	//act
+	// act
 	_, err := op.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.NotNil(t, err, "ObservedProperty mandatory param description not filled in should have returned error")
 	if len(err) > 0 {
 		assert.Contains(t, fmt.Sprintf("%v", err[0]), "name")
@@ -42,44 +43,44 @@ func TestObservedPropertyGetPropertyNames(t *testing.T) {
 }
 
 func TestMandatoryParametersExistObservedProperty(t *testing.T) {
-	//arrange
+	// arrange
 	op := &ObservedProperty{
 		Name:        "test",
 		Definition:  "test",
 		Description: "test",
 	}
 
-	//act
+	// act
 	_, err := op.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.Nil(t, err, "All mandatory params are filled in should not have returned an error")
 }
 
 func TestParseEntityResultOkObservedProperty(t *testing.T) {
-	//arrange
+	// arrange
 	op := &ObservedProperty{}
 
-	//act
+	// act
 	err := op.ParseEntity([]byte(jsonObservedProperty))
 
-	//assert
+	// assert
 	assert.Equal(t, err, nil, "Unable to parse json into ObservedProperty")
 }
 
 func TestParseEntityResultNotOkObservedProperty(t *testing.T) {
-	//arrange
+	// arrange
 	op := &ObservedProperty{}
 
-	//act
+	// act
 	err := op.ParseEntity([]byte(jsonObservedPropertyError))
 
-	//assert
+	// assert
 	assert.NotEqual(t, err, nil, "ObservedProperty parse from json should have failed")
 }
 
 func TestSetLinksSObservedProperty(t *testing.T) {
-	//arrange
+	// arrange
 	op := &ObservedProperty{}
 	op.ID = id
 	ds1 := &Datastream{}
@@ -87,21 +88,21 @@ func TestSetLinksSObservedProperty(t *testing.T) {
 	datastreams := []*Datastream{ds1, ds2}
 	op.Datastreams = datastreams
 
-	//act
+	// act
 	op.SetAllLinks(externalURL)
 
-	//assert
+	// assert
 	assert.Equal(t, op.NavSelf, fmt.Sprintf("%s/v1.0/%s(%s)", externalURL, EntityLinkObservedProperties.ToString(), id), "ObservedProperty navself incorrect")
 	// assert.Equal(t, op.NavDatastreams, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkObservedProperties.ToString(), id, EntityLinkDatastreams.ToString()), "ObservedProperty NavDatastreams incorrect")
 }
 
 func TestGetSupportedEncodingObservedProperty(t *testing.T) {
-	//arrange
+	// arrange
 	op := &ObservedProperty{}
 
 	// act
 	supportedEncoding := op.GetSupportedEncoding()
 
-	//assert
+	// assert
 	assert.Equal(t, 0, len(supportedEncoding), "ObservedProperty should not support any encoding")
 }

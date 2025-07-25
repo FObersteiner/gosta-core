@@ -15,7 +15,7 @@ var historicalLocationJSON = `{
 }`
 
 func TestHistoricalLocationWithMandatoryParameters(t *testing.T) {
-	//arrange
+	// arrange
 	historicalLocation := &HistoricalLocation{}
 	historicalLocation.Time = "testtime"
 	historicalLocation.Locations = []*Location{}
@@ -26,22 +26,22 @@ func TestHistoricalLocationWithMandatoryParameters(t *testing.T) {
 	location := &Location{}
 	location.ID = 1
 	historicalLocation.Locations = append(historicalLocation.Locations, location)
-	//act
+	// act
 	res, err := historicalLocation.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.True(t, res, "HistoricalLocation result should be true")
 	assert.Nil(t, err, "HistoricalLocation mandatory param description not filled in should have returned error")
 }
 
 func TestHistoricalLocationWithoutMandatoryParameters(t *testing.T) {
-	//arrange
+	// arrange
 	historicalLocation := &HistoricalLocation{}
 
-	//act
+	// act
 	res, err := historicalLocation.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.False(t, res, "HistoricalLocation result should be false")
 	assert.NotNil(t, err, "HistoricalLocation mandatory param description not filled in should have returned error")
 }
@@ -58,7 +58,7 @@ func TestGetHistoricalLocationsPropertyNames(t *testing.T) {
 }
 
 func TestSetAllLinks(t *testing.T) {
-	//arrange
+	// arrange
 	historicalLocation := &HistoricalLocation{}
 	historicalLocation.Time = "testtime"
 	thing := Thing{}
@@ -70,38 +70,38 @@ func TestSetAllLinks(t *testing.T) {
 	locations := []*Location{obs1, obs2}
 	historicalLocation.Locations = locations
 
-	//act
+	// act
 	historicalLocation.SetAllLinks("http://www.test.com")
 
-	//assert
+	// assert
 	assert.NotNil(t, historicalLocation.NavSelf)
 	assert.NotNil(t, historicalLocation.NavThing)
 }
 
 func TestParseHistoricalLocationShouldFail(t *testing.T) {
-	//arrange
+	// arrange
 	historicalLocation := &HistoricalLocation{}
 
-	//act
+	// act
 	err := historicalLocation.ParseEntity([]byte("hallo"))
 
-	//assert
+	// assert
 	assert.NotNil(t, err, "Historical parse from json should have failed")
 }
 
 func TestParseHistoricalLocationShouldSucceed(t *testing.T) {
-	//arrange
+	// arrange
 	historicalLocation := &HistoricalLocation{}
 
-	//act
+	// act
 	err := historicalLocation.ParseEntity([]byte(historicalLocationJSON))
 
-	//assert
+	// assert
 	assert.Equal(t, err, nil, "Historical parse from json should have succeeded")
 }
 
 func TestGetSupportedEncoding(t *testing.T) {
-	//arrange
+	// arrange
 	historicalLocation := &HistoricalLocation{}
 
 	// act

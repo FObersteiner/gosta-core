@@ -2,7 +2,6 @@ package core
 
 import (
 	"fmt"
-
 	"strings"
 )
 
@@ -51,7 +50,8 @@ func (e EntityType) GetEndpoint() string {
 }
 
 // EntityTypeList is a list for all known entity types
-var EntityTypeList = []EntityType{EntityTypeThing,
+var EntityTypeList = []EntityType{
+	EntityTypeThing,
 	EntityTypeLocation, EntityTypeHistoricalLocation,
 	EntityTypeDatastream, EntityTypeSensor,
 	EntityTypeObservedProperty, EntityTypeObservation,
@@ -95,7 +95,7 @@ func (e EntityType) GetArrayEndpoint() string {
 
 // ToString return the string representation of the EntityType.
 func (e EntityType) ToString() string {
-	return fmt.Sprintf("%s", e)
+	return string(e)
 }
 
 // EntityFromType returns an empty entity belonging to the type
@@ -219,7 +219,7 @@ func (b BaseEntity) ClearNav() {
 
 // ToString return the string representation of the EntityLink.
 func (e EntityLink) ToString() string {
-	return fmt.Sprintf("%s", e)
+	return string(e)
 }
 
 // Entity is the base interface for all SensorThings entities.
@@ -287,7 +287,6 @@ func CheckMandatoryParam(errorList *[]error, param interface{}, entityType Entit
 			}
 
 			if t == nil || (t.ID == nil && !contains) {
-
 				isNil = true
 			}
 		case *Datastream:
@@ -297,7 +296,6 @@ func CheckMandatoryParam(errorList *[]error, param interface{}, entityType Entit
 			}
 
 			if t == nil || (t.ID == nil && !contains) {
-
 				isNil = true
 			}
 		}

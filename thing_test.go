@@ -2,8 +2,9 @@ package core
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var jsonThing = `{
@@ -19,13 +20,13 @@ var jsonThingError = `{
 	}`
 
 func TestMissingMandatoryParametersThing(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{}
 
-	//act
+	// act
 	_, err := thing.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.NotNil(t, err, "Thing mandatory param description not filled in should have returned error")
 	if len(err) > 0 {
 		assert.Contains(t, fmt.Sprintf("%v", err[0]), "name")
@@ -44,40 +45,40 @@ func TestThingGetPropertyNames(t *testing.T) {
 }
 
 func TestMandatoryParametersExistThing(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{Description: "test", Name: "thingy"}
 
-	//act
+	// act
 	_, err := thing.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.Nil(t, err, "All mandatory params are filled in should not have return an error")
 }
 
 func TestParseEntityResultOkThing(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{}
 
-	//act
+	// act
 	err := thing.ParseEntity([]byte(jsonThing))
 
-	//assert
+	// assert
 	assert.Equal(t, err, nil, "Unable to parse json into thing")
 }
 
 func TestParseEntityResultNotOkThing(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{}
 
-	//act
+	// act
 	err := thing.ParseEntity([]byte(jsonThingError))
 
-	//assert
+	// assert
 	assert.NotEqual(t, err, nil, "Thing parse from json should have failed")
 }
 
 func TestSetLinksThing(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{}
 	thing.ID = id
 	ds1 := &Datastream{}
@@ -94,25 +95,25 @@ func TestSetLinksThing(t *testing.T) {
 	historicallocation.ID = 77
 	thing.HistoricalLocations = []*HistoricalLocation{historicallocation}
 
-	//act
+	// act
 	thing.SetAllLinks(externalURL)
 
-	//assert
+	// assert
 	assert.Equal(t, thing.NavSelf, fmt.Sprintf("%s/v1.0/%s(%s)", externalURL, EntityLinkThings.ToString(), id), "Thing navself incorrect")
-	//assert.Equal(t, thing.NavDatastreams, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkDatastreams.ToString()), "Thing NavDatastreams incorrect")
-	//assert.Equal(t, thing.NavLocations, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkLocations.ToString()), "Thing NavLocations incorrect")
-	//assert.Equal(t, thing.NavHistoricalLocations, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkHistoricalLocations.ToString()), "Thing NavHistoricalLocations incorrect")
+	// assert.Equal(t, thing.NavDatastreams, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkDatastreams.ToString()), "Thing NavDatastreams incorrect")
+	// assert.Equal(t, thing.NavLocations, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkLocations.ToString()), "Thing NavLocations incorrect")
+	// assert.Equal(t, thing.NavHistoricalLocations, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkHistoricalLocations.ToString()), "Thing NavHistoricalLocations incorrect")
 }
 
 func TestSetLinksThingExpanded(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{}
 	thing.ID = id
 
-	//act
+	// act
 	thing.SetAllLinks(externalURL)
 
-	//assert
+	// assert
 	assert.Equal(t, thing.NavSelf, fmt.Sprintf("%s/v1.0/%s(%s)", externalURL, EntityLinkThings.ToString(), id), "Thing navself incorrect")
 	assert.Equal(t, thing.NavDatastreams, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkDatastreams.ToString()), "Thing NavDatastreams incorrect")
 	assert.Equal(t, thing.NavLocations, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkThings.ToString(), id, EntityLinkLocations.ToString()), "Thing NavLocations incorrect")
@@ -120,9 +121,9 @@ func TestSetLinksThingExpanded(t *testing.T) {
 }
 
 func TestGetSupportedEncodingThing(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Thing{}
 
-	//assert
+	// assert
 	assert.Equal(t, 0, len(thing.GetSupportedEncoding()), "Thing should not support any encoding")
 }

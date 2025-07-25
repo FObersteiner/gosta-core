@@ -2,12 +2,13 @@ package core
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestEncodingToString(t *testing.T) {
-	//assert
+	// assert
 	assert.Equal(t, "unknown", EncodingUnknown.Value)
 	assert.Equal(t, 0, EncodingUnknown.Code, "EncodingUnknown code changed")
 
@@ -22,42 +23,42 @@ func TestEncodingToString(t *testing.T) {
 }
 
 func TestEncodingTypeOk(t *testing.T) {
-	//arrange
+	// arrange
 	sml := "http://www.opengis.net/doc/IS/SensorML/2.0"
 
-	//act
+	// act
 	encoding, err := CreateEncodingType(sml)
 
-	//assert
+	// assert
 	assert.Nil(t, err, fmt.Sprintf("Creating encoding type for %s should not have returned an error", sml))
 	assert.Equal(t, 3, encoding.Code, fmt.Sprintf("Incorrect encoding code for %s", sml))
 }
 
 func TestEncodingTypeFail(t *testing.T) {
-	//arrange
+	// arrange
 	sml := "http://www.opengis.net/doc/IS/SensorM/2.0"
 
-	//act
+	// act
 	_, err := CreateEncodingType(sml)
 
-	//assert
+	// assert
 	assert.NotNil(t, err, fmt.Sprintf("Creating encoding type for %s should not returned an error", sml))
 }
 
 func TestCheckEncodingSupportedSensorOk(t *testing.T) {
-	//act
+	// act
 	_, err := CheckEncodingSupported("http://www.opengis.net/doc/IS/SensorML/2.0")
 
-	//assert
+	// assert
 	assert.Nil(t, err, "Sensor should support encoding http://www.opengis.net/doc/IS/SensorML/2.0")
 }
 
 func TestCheckEncodingSupportedSensorFail(t *testing.T) {
-	//arrange
+	// arrange
 
-	//act
+	// act
 	_, err := CheckEncodingSupported("http://www.opengis.net/doc/IS/SensorML/2")
 
-	//assert
+	// assert
 	assert.NotNil(t, err, "Sensor should not support encoding http://www.opengis.net/doc/IS/SensorML/2")
 }

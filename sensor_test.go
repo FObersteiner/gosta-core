@@ -19,13 +19,13 @@ var jsonSensorError = `{
 }`
 
 func TestMissingMandatoryParametersSensor(t *testing.T) {
-	//arrange
+	// arrange
 	sensor := &Sensor{}
 
-	//act
+	// act
 	_, err := sensor.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.NotNil(t, err, "Sensor mandatory param description not filled in should have returned error")
 	if len(err) > 0 {
 		assert.Contains(t, fmt.Sprintf("%v", err[0]), "name")
@@ -44,7 +44,7 @@ func TestSensorGetPropertyNames(t *testing.T) {
 }
 
 func TestMandatoryParametersExistSensor(t *testing.T) {
-	//arrange
+	// arrange
 	sensor := &Sensor{
 		Name:         "test",
 		Description:  "test",
@@ -52,37 +52,37 @@ func TestMandatoryParametersExistSensor(t *testing.T) {
 		Metadata:     "test",
 	}
 
-	//act
+	// act
 	_, err := sensor.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.Nil(t, err, "All mandatory params are filled in should not have returned an error")
 }
 
 func TestParseEntityResultOkSensor(t *testing.T) {
-	//arrange
+	// arrange
 	sensor := &Sensor{}
 
-	//act
+	// act
 	err := sensor.ParseEntity([]byte(jsonSensor))
 
-	//assert
+	// assert
 	assert.Equal(t, err, nil, "Unable to parse json into thing")
 }
 
 func TestParseEntityResultNotOkSensor(t *testing.T) {
-	//arrange
+	// arrange
 	thing := &Sensor{}
 
-	//act
+	// act
 	err := thing.ParseEntity([]byte(jsonSensorError))
 
-	//assert
+	// assert
 	assert.NotEqual(t, err, nil, "Sensor parse from json should have failed")
 }
 
 func TestSetLinksSensor(t *testing.T) {
-	//arrange
+	// arrange
 	sensor := &Sensor{}
 	sensor.ID = id
 	ds1 := &Datastream{}
@@ -90,10 +90,10 @@ func TestSetLinksSensor(t *testing.T) {
 	datastreams := []*Datastream{ds1, ds2}
 	sensor.Datastreams = datastreams
 
-	//act
+	// act
 	sensor.SetAllLinks(externalURL)
 
-	//assert
+	// assert
 	assert.Equal(t, sensor.NavSelf, fmt.Sprintf("%s/v1.0/%s(%s)", externalURL, EntityLinkSensors.ToString(), id), "Sensor navself incorrect")
-	//assert.Equal(t, sensor.NavDatastreams, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkSensors.ToString(), id, EntityLinkDatastreams.ToString()), "Sensor NavDatastreams incorrect")
+	// assert.Equal(t, sensor.NavDatastreams, fmt.Sprintf("%s/v1.0/%s(%s)/%s", externalURL, EntityLinkSensors.ToString(), id, EntityLinkDatastreams.ToString()), "Sensor NavDatastreams incorrect")
 }

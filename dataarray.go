@@ -43,10 +43,10 @@ func (c *CreateObservations) ParseEntity(data []byte) error {
 		}
 
 		rco[i].Datastream.Observations = make([]*Observation, 0)
-		//for each observation
+		// for each observation
 		for j := 0; j < len(rco[i].Data); j++ {
 			obs := &Observation{}
-			//for each value
+			// for each value
 			for k := 0; k < len(rco[i].Data[j]); k++ {
 				field := strings.ToLower(rco[i].Components[k])
 				val := rco[i].Data[j][k]

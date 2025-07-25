@@ -28,12 +28,13 @@ var ObservationTypes = []ObservationType{
 	OMCountObservation,
 	OMMeasurement,
 	OMObservation,
-	OMTruthObservation}
+	OMTruthObservation,
+}
 
 // GetObservationTypeByValue Get the observationType based on value, returns error
 func GetObservationTypeByValue(observationType string) (ObservationType, error) {
 	for _, k := range ObservationTypes {
-		if strings.ToLower(k.Value) == strings.ToLower(observationType) {
+		if strings.EqualFold(k.Value, observationType) {
 			return k, nil
 		}
 	}

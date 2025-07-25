@@ -26,7 +26,7 @@ var EncodingValues = []EncodingType{
 	EncodingSensorML,
 }
 
-//GetSupportedEncodings returns a list of supported encodings
+// GetSupportedEncodings returns a list of supported encodings
 func GetSupportedEncodings() string {
 	var supportedEncodings string
 	for _, k := range EncodingValues {

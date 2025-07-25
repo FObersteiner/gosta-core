@@ -19,13 +19,13 @@ var jsonObservation = ` {
       }`
 
 func TestGetEntityTypeReturnsCorrectType(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{}
 
-	//act
+	// act
 	entityType := observation.GetEntityType()
 
-	//assert
+	// assert
 	assert.Equal(t, EntityTypeObservation, entityType, "getEntityType should return correct type")
 }
 
@@ -47,7 +47,6 @@ func TestSetLinksReturnsCorrectLinks(t *testing.T) {
 	assert.NotNil(t, observation.NavFeatureOfInterest, " NavFeatureOfInterest should be filled in")
 	assert.NotNil(t, observation.FeatureOfInterest.NavSelf, " NavSelf FeatureofInterest should be filled in")
 	assert.NotNil(t, observation.Datastream.NavSelf, " NavSelf Datastream should be filled in")
-
 }
 
 func TestMarshalJson(t *testing.T) {
@@ -110,32 +109,32 @@ func TestGetSupportedEncodingShouldNotReturnAnyEncoding(t *testing.T) {
 }
 
 func TestParseEntityShouldWork(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{}
 
-	//act
+	// act
 	err := observation.ParseEntity([]byte(jsonObservation))
 
-	//assert
+	// assert
 	assert.Equal(t, err, nil, "Observation parse from json should have succeeded")
 }
 
 func TestParseEntityShouldFail(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{}
 
-	//act
+	// act
 	err := observation.ParseEntity([]byte("hallo"))
 
-	//assert
+	// assert
 	assert.NotEqual(t, err, nil, "Observation parse from json should have failed")
 }
 
 func TestMissingMandatoryParametersObservation(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{}
 
-	//act
+	// act
 	ok, err := observation.ContainsMandatoryParams()
 
 	assert.False(t, ok)
@@ -146,13 +145,13 @@ func TestMissingMandatoryParametersObservation(t *testing.T) {
 }
 
 func TestMissingMandatoryParametersWithTimesObservation(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{}
 	observation.PhenomenonTime = time.Now().UTC().Format(time.RFC3339Nano)
 	resultTime := time.Now().UTC().Format("2006-01-02T15:04:05.000Z")
 	observation.ResultTime = &resultTime
 
-	//act
+	// act
 	ok, _ := observation.ContainsMandatoryParams()
 
 	// assert
@@ -160,13 +159,13 @@ func TestMissingMandatoryParametersWithTimesObservation(t *testing.T) {
 }
 
 func TestMissingMandatoryParametersWithWrongTimesObservation(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{}
 	observation.PhenomenonTime = "haha"
 	resulttime := "hoho"
 	observation.ResultTime = &resulttime
 
-	//act
+	// act
 	ok, _ := observation.ContainsMandatoryParams()
 
 	// assert
@@ -201,17 +200,17 @@ func TestMarshalPostgresJSONWithResultTime(t *testing.T) {
 }
 
 func TestMandatoryParametersExistObservation(t *testing.T) {
-	//arrange
+	// arrange
 	observation := &Observation{
 		Result:     []byte("20"),
 		Datastream: &Datastream{},
 	}
 	observation.Datastream.ID = "1"
 
-	//act
+	// act
 	ok, err := observation.ContainsMandatoryParams()
 
-	//assert
+	// assert
 	assert.Nil(t, err, "All mandatory params are filled in should not have returned an error")
 	assert.True(t, ok, "Observation mandatory parameters should be ok")
 }
